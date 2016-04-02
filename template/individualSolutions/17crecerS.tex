@@ -1,0 +1,32 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel} % Le indicamos a LaTeX que vamos a escribir en espa�ol.
+\usepackage[latin1]{inputenc} % Permite utilizar tildes y e�es normalmente
+%\usepackage{framed}
+\input{Algo1Macros}% Macros especificas para especificar problemas en AyEDI
+
+\newcommand{\comen}[2]{%
+\begin{framed}
+\noindent \textsf{#1:} #2
+\end{framed}
+}
+% Aca solo vamos a poner el esqueleto del documento, pero no vamos a especificar nada.
+
+\begin{document} % Todo lo que escribamos a partir de aca va a aparecer en el documento.
+
+\section{Tipos}
+
+\input{tipos/tipos}
+
+\section{Sistema}
+
+\input{tipos/sistema}
+
+\begin{problema}{crecerS}{s: Sistema}{}
+\end{problema}
+
+%\section{Funciones Auxiliares}
+
+%\input{espec/auxiliares.tex}
+
+\end{document} %Termin�!
