@@ -24,7 +24,7 @@
 
 \begin{problema}{vueloRealizadoD}{d: Drone}{[(\ent,\ent)]}
 %%%%%%%%%chequeen este, me entraron dudas si es asi de boludo o hay que tener en cuenta mas cosas%
-\asegura {\res == vueloRealizado(d)}
+\asegura {enVuelo(d) \Rightarrow (\res == vueloRealizado(d)) \land \neg (enVuelo(d)) \Rightarrow (\res == [])}
 \end{problema}
 
 %\section{Funciones Auxiliares}

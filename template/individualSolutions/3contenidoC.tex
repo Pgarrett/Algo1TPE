@@ -23,7 +23,8 @@
 \input{tipos/campo}
 
 \begin{problema}{contenidoC}{c: Campo, i, j: \ent}{Parcela}
-\asegura {\res == contenido(c)}
+\requiere{0 \leq i < prm(dimensiones(c)) \land 0 \leq j < sgd(dimensiones(c))}
+\asegura {\res == contenido(c, i, j)}
 \end{problema}
 
 %\section{Funciones Auxiliares}
