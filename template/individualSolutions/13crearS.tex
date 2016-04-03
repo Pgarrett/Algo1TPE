@@ -23,7 +23,19 @@
 \input{tipos/sistema}
 
 \begin{problema}{crearS}{c: Campo, ds: [Drone]}{Sistema}
+\asegura{campo(\res) == c}
+\asegura[mismaCantidadDeDrones]{|ds| == |enjambreDrones(\res)|}
+\asegura[mismoId]{((\forall d1 \selec ds)(\exists d2 \selec enjambreDrones(\res)) id(d1) == id(d2)) \land ((\forall d3 \selec enjambreDrones(\res))(\exists d4 \selec ds) id(d3) == id(d4))}
+\asegura[dronesCargados]{(\forall d \selec enjambreDrones(\res)) bateria(d) == 100}
+\asegura[losDronesNoEstanVolando]{(\forall d \selec enjambreDrones(\res)) \neg enVuelo(d)}
+\asegura[estanEnElGranero]{(\forall d \selec enjambreDrones(\res)) prm(posicionActual(d)) == prm(posicionGranero(campo(s))) \land sgd(posicionActual(d)) == sgd(posicionGranero(campo(s)))}
+\asegura[mismosProductos]{(\forall d1 \selec ds) (\exists d2 \selec enjambreDrones(\res)) mismos(productosDisponibles(d1), productosDisponibles(d2)) \land (\forall d3 \selec enjambreDrones(\res)) (\exists d4 \selec ds) mismos(productosDisponibles(d3), productosDisponibles(d4))}
+\asegura[parcelasNoSensadas]{(\forall p \selec parcelasConCultivo(campo(s))) estadoDelCultivo(s, prm(p), sgd(p)) == NoSensado}
 \end{problema}
+
+\aux{parcelasConCultivo}{c: Campo}{[(\ent, \ent)]}{
+[(i,j) | i \selec [0..prm(dimensiones(c))), j \selec [0..sgd(dimensiones(c))), contenido(c, i, j) == Cultivo]
+}
 
 %\section{Funciones Auxiliares}
 
