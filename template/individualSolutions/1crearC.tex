@@ -23,7 +23,16 @@
 \input{tipos/campo}
 
 \begin{problema}{crearC}{posG, posC: (\ent, \ent)}{Campo}
+\requiere{ posPositiva(posG) \land posPositiva(posC) }
+\requiere{ \prm{posG} \neq \prm{posC} \lor \sgd{posG} \neq \sgd{posC}}
+\requiere{ distancia((0,0), posG) \leq 100 \land distancia(posG, posC) \leq 100}
+
+\asegura{ contenido(res, \prm{posG}, \sgd{posG}) == Granero} %hace falta 'importar' un tipo?
+\asegura{ contenido(res, \prm{posC}, \sgd{posC}) == Casa} 
 \end{problema}
+
+\noindent \aux{posPositiva}{pos: (\ent, \ent)}{\bool}{\prm{pos} \geq 0 \land \sgd{pos} \geq 0}
+\noindent \aux{distancia}{a, b: (\ent, \ent)}{\ent}{|\prm{a} - \prm{b}| + |\sgd{a} - \sgd{b}|} %se puede usar la del enunciado?
 
 %\section{Funciones Auxiliares}
 
