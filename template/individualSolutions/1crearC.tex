@@ -24,7 +24,7 @@
 
 \begin{problema}{crearC}{posG, posC: (\ent, \ent)}{Campo}
 \requiere{ posPositiva(posG) \land posPositiva(posC) }
-\requiere{ \prm{posG} \neq \prm{posC} \land \sgd{posG} \neq \sgd{posC}}
+\requiere{ \prm{posG} \neq \prm{posC} \lor \sgd{posG} \neq \sgd{posC}}
 \requiere{ distancia((0,0), posG) \leq 100 \land distancia((0,0), posC) \leq 100}
 
 \asegura{ contenido(res, \prm{posG}, \sgd{posG}) == Granero} %hace falta 'importar' un tipo?
