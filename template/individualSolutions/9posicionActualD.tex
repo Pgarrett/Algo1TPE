@@ -23,7 +23,7 @@
 \input{tipos/drone}
 
 \begin{problema}{posicionActualD}{d: Drone}{(\ent, \ent)}
-% si el drone no esta en vuelo cual es su posicion actual? (0,0)
+\requiere{enVuelo(d)}
 \asegura {\res == posicionActual(d)}
 \end{problema}
 
