@@ -23,12 +23,13 @@
 \input{tipos/drone}
 
 \begin{problema}{vueloEscaladeroD}{d: Drone}{\bool}
-\asegura{ res == |vueloRealizado(d)| \geq 3 \land primerasTresSonEscalera(vuelosRealizado(d)) \land (\forall \selector {i}{\rangoca{0}{|v|-1}}), seMueveComoLosPrimeroTres(vueloRealizado(d), i)}
+\asegura{ res == |vueloRealizado(d)| \geq 3 \land esEscalera(vueloRealizado(d))}
 \end{problema}
 
-\noindent \aux{primerasTresSonEscalera}{ps: [(\ent, \ent)]}{\bool}{|\prm{restarPos(ps(d)_{2}, ps(d)_{0})}| == 1 \land |\sgd{restarPos(ps(d)_{2}, ps(d)_{0})}| == 1}
-\noindent \aux{restarPos}{a,b: (\ent, \ent)}{(\ent, \ent)}{ (\prm{a}-\prm{b}, \sgd{a}-\sgd{b}}
-\noindent \aux{seMueveComoLosPrimeroTres}{ps: [(\ent, \ent)], i: \ent}{\bool}{restarPos(ps_{i+1}, ps_{i}) == restarPos(ps_{(i \bmod 2) + 1}, ps_{i \bmod 2})}
+\noindent \aux{esEscalera}{ps: [(\ent, \ent)]}{Bool}{primerosTresSonEscalera(ps) \land (\forall \selector {i}{\rangoca{0}{|ps|-1}}) comoLosPrimerosTres(ps, i)}
+\noindent \aux{primerosTresSonEscalera}{ps: [(\ent, \ent)]}{\bool}{|\prm{restarPos(ps_{2}, ps_{0})}| == 1 \land |\sgd{restarPos(ps_{2}, ps_{0})}| == 1}
+\noindent \aux{comoLosPrimerosTres}{ps: [(\ent, \ent)], i: \ent}{\bool}{restarPos(ps_{i+1}, ps_{i}) == restarPos(ps_{(i \bmod 2) + 1}, ps_{i \bmod 2})}
+\noindent \aux{restarPos}{a,b: (\ent, \ent)}{(\ent, \ent)}{ (\prm{a}-\prm{b}, \sgd{a}-\sgd{b})}
 
 %\section{Funciones Auxiliares}
 
