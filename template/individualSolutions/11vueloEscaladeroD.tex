@@ -23,14 +23,12 @@
 \input{tipos/drone}
 
 \begin{problema}{vueloEscaladeroD}{d: Drone}{\bool}
-\asegura{enVuelo(d)}
-% Habria que revisar aca, para mi que faltan unos casos
-\asegura[subeBajaONada]{subeEscalera(vueloRealizado(d)) \lor bajaEscalera(vueloRealizado(d))}
+\asegura{ res == |vueloRealizado(d)| \geq 3 \land primerasTresSonEscalera(vuelosRealizado(d)) \land (\forall \selector {i}{\rangoca{0}{|v|-1}}), seMueveComoLosPrimeroTres(vueloRealizado(d), i)}
 \end{problema}
 
-\noindent\aux{subeEscalera}{xs: [(\ent,\ent)]}{\bool}{
-(\forall i \selec [0..|xs|-1)) (prm(xs_{i}) == prm(xs_{i+1}) \land sgd(xs_{i}) + 1 == sgd(xs_{i+1})) \lor (prm(xs_{i}) + 1 == prm(xs_{i+1}) \land sgd(xs_{i}) == sgd(xs_{i+1}))
-}
+\noindent \aux{primerasTresSonEscalera}{ps: [(\ent, \ent)]}{\bool}{|\prm{restarPos(ps(d)_{2}, ps(d)_{0})}| == 1 \land |\sgd{restarPos(ps(d)_{2}, ps(d)_{0})}| == 1}
+\noindent \aux{restarPos}{a,b: (\ent, \ent)}{(\ent, \ent)}{ (\prm{a}-\prm{b}, \sgd{a}-\sgd{b}}
+\noindent \aux{seMueveComoLosPrimeroTres}{ps: [(\ent, \ent)], i: \ent}{\bool}{restarPos(ps_{i+1}, ps_{i}) == restarPos(ps_{(i \bmod 2) + 1}, ps_{i \bmod 2})}
 
 %\section{Funciones Auxiliares}
 
