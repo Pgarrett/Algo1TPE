@@ -23,6 +23,12 @@
 \input{tipos/sistema}
 
 \begin{problema}{seVinoLaMalezaS}{s: Sistema, ps: [(\ent,\ent)]}{}
+\requiere{(\forall p \selec ps)  enRango(dimensiones(campo(s)), prm(p), sgd(p)}
+\requiere{(\forall p \selec ps) contenido(campo(s), prm(p), sgd(p)) == Cultivo}
+\modifica{s}
+\asegura{campo(pre(s)) == campo(s)}
+\asegura{mismos(enjambreDrones(pre(s)), enjambreDrones(s))}
+\asegura{(\forall p \selec ps) estadoDelCultivo(s, prm(p), sgd(p)) == ConMaleza}
 \end{problema}
 
 %\section{Funciones Auxiliares}
