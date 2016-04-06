@@ -23,12 +23,7 @@
 \input{tipos/sistema}
 
 \begin{problema}{enjambreDronesS}{s: Sistema}{[Drone]}
-\asegura[mismoId]{((\forall d1 \selec enjambreDrones(s)) (\exists d2 \selec \res) id(d1) == id(d2)) \land ((\forall d3 \selec \res) (\exists d4 \selec enjambreDrones(s)) id(d3) == id(d4))}
-\asegura[mismaBateria]{((\forall d1 \selec enjambreDrones(s)) (\exists d2 \selec \res) bateria(d1) == bateria(d2)) \land ((\forall d3 \selec \res) (\exists d4 \selec enjambreDrones(s)) bateria(d3) == bateria(d4))}
-\asegura[mismoEstado]{((\forall d1 \selec enjambreDrones(s)) (\exists d2 \selec \res) enVuelo(d1) == enVuelo(d2)) \land ((\forall d3 \selec \res) (\exists d4 \selec enjambreDrones(s)) enVuelo(d3) == enVuelo(d4))}
-\asegura[mismoVueloRealizado]{((\forall d1 \selec enjambreDrones(s)) (\exists d2 \selec \res) vueloRealizado(d1) == vueloRealizado(d2)) \land ((\forall d3 \selec \res) (\exists d4 \selec enjambreDrones(s)) vueloRealizado(d3) == vueloRealizado(d4))}
-\asegura[mismaPosicion]{((\forall d1 \selec enjambreDrones(s)) (\exists d2 \selec \res) posicionActual(d1) == posicionActual(d2)) \land ((\forall d3 \selec \res) (\exists d4 \selec enjambreDrones(s)) posicionActual(d3) == posicionActual(d4))}
-\asegura[mismosProductos]{(\forall d1 \selec enjambreDrones(s)) (\exists d2 \selec \res) mismos(productosDisponibles(d1), productosDisponibles(d2)) \land (\forall d3 \selec \res) (\exists d4 \selec enjambreDrones(s)) mismos(productosDisponibles(d3), productosDisponibles(d4))}
+\asegura{mismos(res, enjambreDrones(s))}
 \end{problema}
 
 %\section{Funciones Auxiliares}
