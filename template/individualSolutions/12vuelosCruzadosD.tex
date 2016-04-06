@@ -22,17 +22,16 @@
 
 \input{tipos/drone}
 
-
 \begin{problema}{vuelosCruzadosD}{ds: [Drone]}{[((\ent,\ent),\ent)]}
 \requiere{(\forall \selector {d}{ds}) enVuelo(d)}
 \requiere{(\forall \selector {d1}{ds}, \selector {d2}{ds}) |vueloReaizado(d1)| == |vueloRealizado(d2)|}
-\asegura{TO-DO}
+\asegura{(\forall \selector {i}{[0..|res|)}) sgd(res_i) == dronesEnPosicion(ds, prm(res_i))}
 \asegura{ordenadoAsc(res) \lor ordenadoDesc(res)}
 \end{problema}
 
-\noindent \aux{dronesEnPosicionEnInstante}{ds: [Drone], pos: (\ent, \ent), i: \ent}{\ent}{|[d | d \selec ds, vueloRealizado(d)_i == pos]|}
-\noindent \aux{ordenadoAsc}{[((\ent,\ent),\ent)]}{Bool}{(\forall \selector {p}{[0..|res|-1)}) sgd(res_p) \leq sgd(res_{p+1}))}
-\noindent \aux{ordenadoDesc}{[((\ent,\ent),\ent)]}{Bool}{(\forall \selector {p}{[0..|res|-1)}) sgd(res_p) \geq sgd(res_{p+1}))}
+\noindent \aux{dronesEnPosicion}{ds: [Drone], pos: (\ent, \ent)}{\ent}{|[d | d \selec ds, i | i \selec [0..|vueloRealizado(d)|), vueloRealizado(d)_i == pos]|}
+\noindent \aux{ordenadoAsc}{ps: [((\ent,\ent),\ent)]}{Bool}{(\forall \selector {p}{[0..|ps|-1)}) sgd(res_p) \leq sgd(res_{p+1}))}
+\noindent \aux{ordenadoDesc}{ps: [((\ent,\ent),\ent)]}{Bool}{(\forall \selector {p}{[0..|ps|-1)}) sgd(res_p) \geq sgd(res_{p+1}))}
 
 %\section{Funciones Auxiliares}
 
