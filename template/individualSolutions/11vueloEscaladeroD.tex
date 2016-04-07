@@ -23,6 +23,7 @@
 \input{tipos/drone}
 
 \begin{problema}{vueloEscaladeroD}{d: Drone}{\bool}
+%Aca vamos a tener que aclarar que asumimos que una escalera sin escalones no es escalera, le pregunte a un ayudante y me dijo que pongamos un comentario.%
 \asegura{ res == |vueloRealizado(d)| \geq 3 \land esEscalera(vueloRealizado(d))}
 \end{problema}
 
