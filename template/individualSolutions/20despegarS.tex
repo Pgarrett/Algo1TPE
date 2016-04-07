@@ -28,7 +28,7 @@
 \requiere{\neg enVuelo(d)}
 \requiere{bateria(d) > 0}
 %Aclarar que está en el granero por invariante de s%
-\modifica d
+\modifica{d}
 \asegura{id(d) == id(pre(d))}
 \asegura{bateria(d) == bateria(pre(d))-1}
 \asegura{enVuelo(d)}
