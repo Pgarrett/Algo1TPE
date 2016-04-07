@@ -23,7 +23,7 @@
 \input{tipos/sistema}
 
 \begin{problema}{estadoDelCultivoS}{s: Sistema, i, j: \ent}{EstadoCultivo}
-\requiere{enRango(dimensiones(campo(s), i, j))}
+\requiere{enRango(dimensiones(campo(s)), i, j)}
 \requiere{contenido(campo(s), i, j) == Cultivo}
 \asegura{\res == estadoDelCultivo(s, i, j)}
 \end{problema}
