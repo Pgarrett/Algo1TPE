@@ -23,7 +23,13 @@
 \input{tipos/sistema}
 
 \begin{problema}{listoParaCosecharS}{s: Sistema}{\bool}
+
+%Por invariante del campo, al menos una parcela tiene cultivo asi que no se indefine%
+\asegura{res == (|[p | p \selec parcelasConCultivo(s), estadoDelCultivo(p) == ListoParaCosechar]|/|parcelasConCultivo(s)| >= 0.9)}
+
 \end{problema}
+
+\noindent \aux{parcelasConCultivo}{s: Sistema}{[(\ent, \ent)]}{[(i,j) | i \selec [0..prm(dimensiones(campo(s)))), j \selec [0..sgd(dimensiones(campo(s)))), contenido(campo(s), prm(p'), sgd(p')) == Cultivo]}
 
 %\section{Funciones Auxiliares}
 
