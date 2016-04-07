@@ -23,8 +23,7 @@
 \input{tipos/drone}
 
 \begin{problema}{vueloRealizadoD}{d: Drone}{[(\ent,\ent)]}
-%%%%%%%%%chequeen este, me entraron dudas si es asi de boludo o hay que tener en cuenta mas cosas%
-\asegura {enVuelo(d) \Rightarrow (\res == vueloRealizado(d))}
+\asegura {enVuelo(d) \Rightarrow mismos(\res, cola(vueloRealizado(d)))}
 \end{problema}
 
 %\section{Funciones Auxiliares}
