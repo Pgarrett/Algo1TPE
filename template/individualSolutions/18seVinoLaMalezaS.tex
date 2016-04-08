@@ -31,7 +31,8 @@
 \asegura{(\forall p \selec ps) estadoDelCultivo(s, prm(p), sgd(p)) == ConMaleza}
 \end{problema}
 
-\aux{mismosDrones}{ds1: [Drone], ds2: [Drone]}{Bool}{(|ds1| == |ds2|) \land (sinRepetidos(d1)) \land (sinRepetidos(d2)) \land ((\forall d1 \selec ds1) \exists d2 \in ds2 | (id(d1) == id(d2)) \land (bateria(d1) == bateria(d2)) \land (enVuelo(d1) == enVuelo(d2)) \land (vueloRealizado(d1) == vueloRealizado(d2)) \land (posicionActual(d1) == posicionActual(d2)) \land (mismos(productosDisponibles(d1),  productosDisponibles(d2))))}
+\aux{mismosDrones}{ds1: [Drone], ds2: [Drone]}{Bool}{
+(|ds1| == |ds2|) \land (sinRepetidos(d1)) \land (sinRepetidos(d2)) \land ((\forall d1 \selec ds1) (\exists d2 \in ds2) (id(d1) == id(d2)) \land (bateria(d1) == bateria(d2)) \land (enVuelo(d1) == enVuelo(d2)) \land (vueloRealizado(d1) == vueloRealizado(d2)) \land (posicionActual(d1) == posicionActual(d2)) \land (mismos(productosDisponibles(d1), productosDisponibles(d2))))}
 
 %\section{Funciones Auxiliares}
 
