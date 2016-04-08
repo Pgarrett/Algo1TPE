@@ -23,7 +23,23 @@
 \input{tipos/sistema}
 
 \begin{problema}{fertilizarPorFilas}{s: Sistema}{}
+\requiere[unDronPorFila]{sinRepetidos([prm(posicionActual(d)) | d \selec enjambreDrones(s), enVuelo(d)])}
+\modifica{s}
+\asegura[mismoCampoYCultivo]{mismoCampoYCutivo(s, pre(s))}
+\asegura[mismaCantidadDeDrones]{|enjambreDrones(s)| == |enjambreDrones(pre(s))|}
+\asegura[siNoVuelanNoSeModifican]{(\forall d' \selec enjambreDrones(pre(s))) \neg enVuelo(d') \Rightarrow droneEnSistema(s, d')}
+\asegura[fertilizan]{(\forall d' \selec enjambreDrones(pre(s))) enVuelo(d') \Rightarrow droneFertilizaEnSistema(s, d')}
+
 \end{problema}
+
+\noindent\aux{mismoCampoYCultivo}{s1: Sistema, s2: Sistema}{Bool}{mismoCampo(s1, s2) \land ((\forall {p} \selec {parcelasConCultivo(s1)}) estadoDelCultivo(s1, prm(p), sgd(p)) == estadoDelCultivo(s2, prm(p), sgd(p)))}
+
+\noindent\aux{mismoCampo}{s1: Sistema, s2: Sistema}{Bool}{(campo(s1) == campo(s2))}
+
+\noindent \aux{droneEnSistema}{s: Sistema, d1: Drone}{Bool}{(\exists d2 \selec enjambreDrones(s)) (id(d1) == id(d2)) \land (bateria(d1) == bateria(d2)) \land (enVuelo(d1) == enVuelo(d2)) \land (vueloRealizado(d1) == vueloRealizado(d2)) \land (posicionActual(d1) == posicionActual(d2)) \land (mismos(productosDisponibles(d1),  productosDisponibles(d2)))}
+
+%TO - DO%
+\noindent \aux{droneFertilizaEnSistema}{s: Sistema, d1: Drone}{Bool}{TO-DO}
 
 %\section{Funciones Auxiliares}
 
