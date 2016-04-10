@@ -23,20 +23,6 @@
 \input{tipos/sistema}
 
 \begin{problema}{enjambreDronesS}{s: Sistema}{[Drone]}
-\asegura[mismaCantidad]{|res| == |enjambreDrones(s)|}
-%Aca me gustaria aclarar que como las dos listas tienen la misma cantidad y no tienen repetidos (por invariante), entonces se puede hacer la comparacion para un solo lado.%
-\asegura[mismoId]{(\forall d1 \selec enjambreDrones(s)) (\exists d2 \selec \res) id(d1) == id(d2)}
-\asegura[mismaBateria]{(\forall d1 \selec enjambreDrones(s), d2 \selec \res) id(d1)==id(d2) \Rightarrow bateria(d1) == bateria(d2)}
-\asegura[mismoEstado]{(\forall d1 \selec enjambreDrones(s), d2 \selec \res) id(d1)==id(d2) \Rightarrow enVuelo(d1) == enVuelo(d2)}
-\asegura[mismoVueloRealizado]{(\forall d1 \selec enjambreDrones(s), d2 \selec \res) id(d1)==id(d2) \Rightarrow vueloRealizado(d1) == vueloRealizado(d2)}
-\asegura[mismaPosicion]{(\forall d1 \selec enjambreDrones(s), d2 \selec \res) id(d1)==id(d2) \Rightarrow posicionActual(d1) == posicionActual(d2)}
-\asegura[mismosProductos]{(\forall d1 \selec enjambreDrones(s), d2 \selec \res) id(d1) == id(d2) \Rightarrow  mismos(productosDisponibles(d1),  productosDisponibles(d2))}
-\end{problema}
-
-%
-Podríamos reutilizar el aux que usamos para otros problemas más adelante y poner:
-
-\begin{problema}{enjambreDronesS}{s: Sistema}{[Drone]}
 \asegura mismosDrones(enjambreDrones(s), res)
 \end{problema}
 
