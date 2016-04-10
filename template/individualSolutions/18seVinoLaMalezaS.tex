@@ -23,12 +23,13 @@
 \input{tipos/sistema}
 
 \begin{problema}{seVinoLaMalezaS}{s: Sistema, ps: [(\ent,\ent)]}{}
-\requiere{(\forall p \selec ps)  enRango(dimensiones(campo(s)), prm(p), sgd(p)}
-\requiere{(\forall p \selec ps) contenido(campo(s), prm(p), sgd(p)) == Cultivo}
+\requiere[parcelasEnRango]{(\forall p \selec ps)  enRango(dimensiones(campo(s)), prm(p), sgd(p))}
+\requiere[parcelasConCultivo]{(\forall p \selec ps) contenido(campo(s), prm(p), sgd(p)) == Cultivo}
 \modifica{s}
-\asegura{campo(pre(s)) == campo(s)}
-\asegura{mismosDrones(enjambreDrones(pre(s)), enjambreDrones(s))}
-\asegura{(\forall p \selec ps) estadoDelCultivo(s, prm(p), sgd(p)) == ConMaleza}
+\asegura[mismoCampo]{campo(s) == campo(pre(s))}
+\asegura[mismosDrones]{mismosDrones(enjambreDrones(s), enjambreDrones(pre(s)))}
+\asegura[mismoEstado]{(\forall p \selec parcelasConCultivo(campo(pre(s))), p \notin ps) estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p))}
+\asegura[cultivoConMaleza]{(\forall p \selec ps) estadoDelCultivo(s, prm(p), sgd(p)) == ConMaleza}
 \end{problema}
 
 \aux{mismosDrones}{ds1: [Drone], ds2: [Drone]}{Bool}{
