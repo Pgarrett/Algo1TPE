@@ -23,6 +23,22 @@
 \input{tipos/sistema}
 
 \begin{problema}{volarYSensarS}{s: Sistema, d: Drone}{}
+\requiere[droneEnSistema]{droneEnLista(enjambreDrones(s), d)}
+\requiere[algoDeBateria]{bateria(d) > 0}
+\modifica{s}
+
+\asegura[mismoCampo]{campo(s) == campo(pre(s))}
+
+\asegura[mismaCantidadDeDrones]{|enjambreDrones(s)| == |enjambreDrones(pre(s))|}
+
+\asegura[mismosDronesSinD]{(\forall d' \selec enjambreDrones(pre(s)), d \neq d') droneEnLista(enjambreDrones(s), d')}
+
+\asegura[nuevoD]{}
+
+\asegura[noDMismoEstadoDelCultivo]{}
+
+\asegura[dNuevoEstadoDelCultivo]{}
+
 \end{problema}
 
 %\section{Funciones Auxiliares}
