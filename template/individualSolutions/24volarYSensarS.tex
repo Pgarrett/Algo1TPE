@@ -33,13 +33,37 @@
 
 \asegura[mismosDronesSinD]{(\forall d' \selec enjambreDrones(pre(s)), d \neq d') droneEnLista(enjambreDrones(s), d')}
 
-\asegura[nuevoD]{}
+\asegura[nuevoD]{(\exists d' \selec enjambreDrones(s)) id(d') == id(d) \\ \land bateria(d') == bateria(d)-1-bateriaConsumida(pre(s), d, d')) \\ \land enVuelo(d')
+\land |vueloRealizado(d')| == |vueloRealizado(d)|+1
+\\ \land
+|productosAplicados(d, d')| <= 1
+\\ \land
+mismos(productosAplicados(d, d')++productosDisponibles(d'), productosDisponibles(d))}
 
-\asegura[noDMismoEstadoDelCultivo]{}
+\asegura[noDMismoEstadoDelCultivo]{(\forall p \selec parcelasConCultivo(campo(pre(s))), \\ p \notin parcelasAfectadas(pre(s), d, dronePorId(s, d))) 
+\\ esPosicionActualNoSensada(s, dronePorId(s, d)) \Rightarrow (estadoDelCultivo(s, prm(p), sgd(p)) \neq NoSensado) 
+\\ \land \neg esPosicionActualNoSensada(s, dronePorId(s, d)) \Rightarrow \\ (estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p)))}
+%Tener en cuenta los productos de largo alcance%
 
-\asegura[dNuevoEstadoDelCultivo]{}
+\asegura[dNuevoEstadoDelCultivo]{(\forall p \selec parcelasAfectadas(pre(s), d, dronePorId(s, d))) \\
+estadoDelCultivo(s, prm(p), sgd(p)) == RecienSembrado}
 
 \end{problema}
+
+\aux{bateriaConsumida}{s: Sistema, d1: Drone,  d2: Drone}{\ent}{max(0:[sgd(i) | i \selec \\ impactoProductos(s, d1, productosAplicados(d1, d2))])}
+
+\aux{parcelasAfectadas}{s: Sistema, d1: Drone,  d2: Drone}{[\ent]}{[pos | i \selec \\ impactoProductos(s, d2, productosAplicados(d1, d2)), pos \selec trc(i)]}
+
+\aux{productosAplicados}{d1: Drone, d2: Drone}{[Producto]}{[p | p \selec productosDisponibles(d1), \\ p \notin productosDisponibles(d2)]}
+
+\aux{impactoProductos}{s: Sistema, d: Drone, ps: [Producto]}{[(Producto, Carga, [(\ent, \ent)])]}{[i | i \selec infoProductos(s, d), \\ prm(i) \in ps]}
+
+\aux{infoProductos}{s: Sistema, d: Drone}{[(Producto, Carga, [(\ent, \ent)])]}{[\\(Plaguicida, bateria(d)*0.1, [posicionActual(d)]), \\
+(PlaguicidaBajoConsumo, bateria(d)*0.05, [posicionActual(d)]), \\
+(Herbicida, bateria(d)*0.05, [posicionActual(d)]), \\
+(HerbicidaLargoAlcance, bateria(d)*0.05, posicionActual(d):parcelasAdyacentesConMaleza(s,posicionActual(d)))]}
+
+\aux{esPosicionActualNoSensada}{s: Sistema, d: Drone}{Bool}{estadoDelCultivo(s, prm(posicionActual(d)), \\ sgd(posicionActual(d))) == NoSensado}
 
 %\section{Funciones Auxiliares}
 
