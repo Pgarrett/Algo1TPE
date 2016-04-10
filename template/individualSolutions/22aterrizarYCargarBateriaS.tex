@@ -23,22 +23,20 @@
 \input{tipos/sistema}
 
 \begin{problema}{aterrizarYCargarBateriaS}{s: Sistema, b: \ent}{}
-\requiere{0 \leq b \leq 100}
-\modifica{s}
-\asegura{campo(pre(s)) == campo(s)}
-\asegura{(\forall {p} \selec {parcelasConCultivo(s)}) estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p))}
-\asegura{(\forall {d} \selec {enjambreDrones(pre(s))}) bateria(d) \geq b \Rightarrow droneEnLista(enjambreDrones(s), d)}
 
-\asegura{(\forall {d} \selec {enjambreDrones(pre(s))}) bateria(d) < b \Rightarrow (\exists d' \selec enjambreDrones(s)) id(d') == id(d) \land bateria(d') == 100 \land \neg enVuelo(d') \land posicionActual(d') == posicionGranero(campo(s)) \land (mismos(productosDisponibles(d),  productosDisponibles(d')))}
+\requiere[bateriaOk]{0 \leq b \leq 100}
+\modifica{s}
+\asegura[mismoCampo]{campo(s) == campo(pre(s))}
+
+\asegura[mismoEstado]{(\forall {p} \selec {parcelasConCultivo(campo(s))}) \\ estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p))}
+
+\asegura[dronesIguales]{(\forall {d} \selec {enjambreDrones(pre(s))}) \\ bateria(d) \geq b \Rightarrow droneEnLista(enjambreDrones(s), d)}
+
+\asegura[dronesAterrizados]{(\forall {d} \selec {enjambreDrones(pre(s))}) \\ bateria(d) < b \Rightarrow (\exists d' \selec enjambreDrones(s)) \\ id(d') == id(d) \land bateria(d') == 100 \land \neg enVuelo(d') \land (mismos(productosDisponibles(d'),  productosDisponibles(d)))}
 
 \end{problema}
 
-\noindent \aux{parcelasConCultivo}{s: Sistema}{[(\ent, \ent)]}{[(i,j) | i \selec [0..prm(dimensiones(campo(s)))), j \selec [0..sgd(dimensiones(campo(s)))), contenido(campo(s), prm(p'), sgd(p')) == Cultivo]}
-
 \noindent \aux{droneEnLista}{ds: [Drone], d: Drone}{Bool}{(\exists d' \selec ds) (id(d) == id(d')) \land (bateria(d) == bateria(d')) \land (enVuelo(d) == enVuelo(d')) \land (vueloRealizado(d) == vueloRealizado(d')) \land (posicionActual(d) == posicionActual(d')) \land (mismos(productosDisponibles(d),  productosDisponibles(d')))}
-
-%TODO!%
-\noindent \aux{posicionGranero}{c: Campo}{(\ent, \ent)}{}
 
 %\section{Funciones Auxiliares}
 
