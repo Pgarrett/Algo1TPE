@@ -23,23 +23,36 @@
 \input{tipos/sistema}
 
 \begin{problema}{fertilizarPorFilas}{s: Sistema}{}
-\requiere[unDronPorFila]{sinRepetidos([prm(posicionActual(d)) | d \selec enjambreDrones(s), enVuelo(d)])}
+\requiere[unDronVolandoPorFila]{sinRepetidos([sgd(posicionActual(d)) | d \selec enjambreDrones(s), enVuelo(d)])}
+
 \modifica{s}
-\asegura[mismoCampoYCultivo]{mismoCampoYCutivo(s, pre(s))}
+
+\asegura[mismoCampo]{campo(s) == campo(pre(s))}
+
+\asegura[parcelasSinFertilizar]{(\forall p \selec parcelasConCultivo(campo(pre(s))), p \notin parcelasAFertilizar(pre(s))) \\ estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p))}
+
+\asegura[parcelasFertilizadas]{(\forall p \selec parcelasAFertilizar(pre(s))) \\ estadoDelCultivo(pre(s), prm(p), sgd(p)) \in [EnCrecimiento, RecienSembrado] \\ \Rightarrow estadoDelCultivo(s, prm(p), sgd(p)) == ListoParaCosechar) \\
+estadoDelCultivo(pre(s), prm(p), sgd(p)) \notin [EnCrecimiento, RecienSembrado] \\ \Rightarrow estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p))}
+
 \asegura[mismaCantidadDeDrones]{|enjambreDrones(s)| == |enjambreDrones(pre(s))|}
-\asegura[siNoVuelanNoSeModifican]{(\forall d' \selec enjambreDrones(pre(s))) \neg enVuelo(d') \Rightarrow droneEnSistema(s, d')}
-\asegura[fertilizan]{(\forall d' \selec enjambreDrones(pre(s))) enVuelo(d') \Rightarrow droneFertilizaEnSistema(s, d')}
+
+\asegura[siNoVuelanNoSeModifican]{(\forall d \selec enjambreDrones(pre(s))) \\ \neg enVuelo(d) \Rightarrow droneEnLista(enjambreDrones(s), d)}
+
+\asegura[siVuelanFertilizan]{(\forall d \selec enjambreDrones(pre(s))) \\ enVuelo(d) \Rightarrow droneEnLista(enjambreDrones(s), droneDespuesDeFertilizar(d))}
 
 \end{problema}
 
-\noindent\aux{mismoCampoYCultivo}{s1: Sistema, s2: Sistema}{Bool}{mismoCampo(s1, s2) \land ((\forall {p} \selec {parcelasConCultivo(s1)}) estadoDelCultivo(s1, prm(p), sgd(p)) == estadoDelCultivo(s2, prm(p), sgd(p)))}
+%revisar si se incluye la parcela actual%
 
-\noindent\aux{mismoCampo}{s1: Sistema, s2: Sistema}{Bool}{(campo(s1) == campo(s2))}
+\aux{parcelasAFertilizar}{s: Sistema}{[(\ent, \ent)]}{[p | d \selec enjambreDrones(s), \\ p \selec parcelasAFertilizarPorDrone(s, d), enVuelo(d)]}
 
-\noindent \aux{droneEnSistema}{s: Sistema, d1: Drone}{Bool}{(\exists d2 \selec enjambreDrones(s)) (id(d1) == id(d2)) \land (bateria(d1) == bateria(d2)) \land (enVuelo(d1) == enVuelo(d2)) \land (vueloRealizado(d1) == vueloRealizado(d2)) \land (posicionActual(d1) == posicionActual(d2)) \land (mismos(productosDisponibles(d1),  productosDisponibles(d2)))}
+\aux{parcelasAFertilizarPorDrone}{s: Sistema, d: Drone}{[(\ent, \ent)]}{[(i, sgd(posicionActual(d))) | \\ i \selec [fertilizaHastaColumna(s, d)..prm(posicionActual(d))]]}
 
-%TO - DO%
-\noindent \aux{droneFertilizaEnSistema}{s: Sistema, d1: Drone}{Bool}{TO-DO}
+\aux{fertilizaHastaColumna}{s: Sistema, d: Drone}{\ent}{max0([primerObstaculoEnColumna(campo(s), d)+1, \\ prm(posicionActual(d))-bateria(d), prm(posicionActual(d))-fertilizanteDisponible(d)])}
+
+\aux{primerObstaculoEnColumna}{c: Campo, d: Drone}{\ent}{max0([i | i \selec [0..prm(posicionActual(d))], \\ contenido(c, i, sgd(posicionActual(d))) \neq Cultivo])}
+
+\aux{droneDespuesDeFertilizar}{s: Sistema, d: Drone}{d: Drone}{TO-DO}
 
 %\section{Funciones Auxiliares}
 
