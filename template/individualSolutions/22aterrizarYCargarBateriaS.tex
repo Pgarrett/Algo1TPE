@@ -24,19 +24,20 @@
 
 \begin{problema}{aterrizarYCargarBateriaS}{s: Sistema, b: \ent}{}
 
-\requiere[bateriaOk]{0 \leq b \leq 100}
 \modifica{s}
 \asegura[mismoCampo]{campo(s) == campo(pre(s))}
-
 \asegura[mismoEstado]{(\forall {p} \selec {parcelasConCultivo(campo(s))}) \\ estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p))}
 
-\asegura[dronesIguales]{(\forall {d} \selec {enjambreDrones(pre(s))}) \\ bateria(d) \geq b \Rightarrow droneEnLista(enjambreDrones(s), d)}
-
-\asegura[dronesAterrizados]{(\forall {d} \selec {enjambreDrones(pre(s))}) \\ bateria(d) < b \Rightarrow (\exists d' \selec enjambreDrones(s)) \\ id(d') == id(d) \land bateria(d') == 100 \land \neg enVuelo(d') \land (mismos(productosDisponibles(d'),  productosDisponibles(d)))}
+\asegura[mismosDronesYProductos]{mismosDronesYProductos(enjambreDrones(s), enjambreDrones(pre(s))}
+\asegura[dronesEnVueloTenianBateria]{(\forall{d} \selec {enjambreDrones(s)}, d' \selec{enjambeDrones(pre(s))}, id(d) == id(d')) enVuelo(d) \Rightarrow (bateria(d') > b)}
+\asegura[dronesConBateriaEstanIgual]{(\forall{d} \selec {enjambreDrones(s)}, d' \selec{enjambeDrones(pre(s))}, id(d) == id(d')) (bateria(d')) \ge b) \Rightarrow mismoVueloYBateria(d, d')}
 
 \end{problema}
 
-\noindent \aux{droneEnLista}{ds: [Drone], d: Drone}{Bool}{(\exists d' \selec ds) (id(d) == id(d')) \land (bateria(d) == bateria(d')) \land (enVuelo(d) == enVuelo(d')) \land (vueloRealizado(d) == vueloRealizado(d')) \land (posicionActual(d) == posicionActual(d')) \land (mismos(productosDisponibles(d),  productosDisponibles(d')))}
+%\section{Funciones Auxiliares}
+\noindent \aux{mismosDronesYProductos}{ds1, ds2: [Drone]}{\bool}{(|ds1| == |ds2|) \land (sinRepetidos(d1))) \land ((\forall d1 \selec ds1) \exists d2 \in ds2 | (id(d1) == id(d2)) \land (mismos(productosDisponibles(d1),  productosDisponibles(d2))))}
+\noindent \aux{mismoVueloYBateria}{d, d': Drone}{\bool}{(bateria(d) == bateria(d')) \land (vueloRealizado(d) == vueloRealizado(d')) \land (posicionActual(d) == posicionActual(d'))}
+
 
 %\section{Funciones Auxiliares}
 
