@@ -24,14 +24,18 @@
 
 \begin{problema}{crecerS}{s: Sistema}{}
 \modifica s
-\asegura{campo(pre(s)) == campo(s)}
-\asegura{mismosDrones(enjambreDrones(pre(s)), enjambreDrones(s))}
-\asegura{(\forall p \selec parcelasConCultivo(s)) ((estadoDelCultivo(pre(s), prm(p), sgd(p)) == RecienSembrado \Rightarrow estadoDelCultivo(s, prm(p), sgd(p)) == EnCrecimiento) \land (estadoDelCultivo(pre(s), prm(p), sgd(p)) == EnCrecimiento \Rightarrow estadoDelCultivo(s, prm(p), sgd(p)) == ListoParaCosechar)) \lor (estadoDelCultivo(pre(s), prm(p), sgd(p)) == estadoDelCultivo(s, prm(p), sgd(p)))}
+\asegura[mismoCampo]{campo(s) == campo(pre(s))}
+\asegura[mismosDrones]{mismosDrones(enjambreDrones(s), enjambreDrones(pre(s)))}
+
+\asegura{(\forall p \selec parcelasConCultivo(s))  deRecienSembradoAEnCrecimiento(pre(s), s, p) \\ \land deEnCrecimientoAListoParaCosechar(pre(s), s, p) \land mismoEstado(pre(s), s, p)}
+
 \end{problema}
 
-\noindent \aux{mismosDrones}{ds1: [Drone], ds2: [Drone]}{Bool}{(|ds1| == |ds2|) \land (sinRepetidos(d1)) \land (sinRepetidos(d2)) \land ((\forall d1 \selec ds1) \exists d2 \in ds2 | (id(d1) == id(d2)) \land (bateria(d1) == bateria(d2)) \land (enVuelo(d1) == enVuelo(d2)) \land (vueloRealizado(d1) == vueloRealizado(d2)) \land (posicionActual(d1) == posicionActual(d2)) \land (mismos(productosDisponibles(d1),  productosDisponibles(d2))))}
+\aux{deRecienSembradoAEnCrecimiento}{preS, s:Sistema, p: (\ent, \ent)}{Bool}{(estadoDelCultivo(preS, prm(p), sgd(p)) \\ == RecienSembrado \Rightarrow estadoDelCultivo(s, prm(p), sgd(p)) == EnCrecimiento)}
 
-\noindent \aux{parcelasConCultivo}{s: Sistema}{[(\ent, \ent)]}{[(i,j) | i \selec [0..prm(dimensiones(campo(s)))), j \selec [0..sgd(dimensiones(campo(s)))), contenido(campo(s), prm(p'), sgd(p')) == Cultivo]}
+\aux{deEnCrecimientoAListoParaCosechar}{preS, s:Sistema, p: (\ent, \ent)}{Bool}{(estadoDelCultivo(preS, prm(p), sgd(p)) \\ == EnCrecimiento \Rightarrow estadoDelCultivo(s, prm(p), sgd(p)) == ListoParaCosechar)}
+
+\aux{mismoEstado}{preS, s:Sistema, p: (\ent, \ent)}{Bool}{(estadoDelCultivo(preS, prm(p), sgd(p)) \\ \notin [RecienSembrado, EnCrecimiento] \Rightarrow estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(preS, prm(p), sgd(p)))}
 
 %\section{Funciones Auxiliares}
 
