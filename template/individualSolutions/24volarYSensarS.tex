@@ -58,10 +58,10 @@ estadoDelCultivo(s, prm(p), sgd(p)) == RecienSembrado}
 
 \aux{impactoProductos}{s: Sistema, d: Drone, ps: [Producto]}{[(Producto, Carga, [(\ent, \ent)])]}{[i | i \selec infoProductos(s, d), \\ prm(i) \in ps]}
 
-\aux{infoProductos}{s: Sistema, d: Drone}{[(Producto, Carga, [(\ent, \ent)])]}{[\\(Plaguicida, bateria(d)*0.1, [posicionActual(d)]), \\
-(PlaguicidaBajoConsumo, bateria(d)*0.05, [posicionActual(d)]), \\
-(Herbicida, bateria(d)*0.05, [posicionActual(d)]), \\
-(HerbicidaLargoAlcance, bateria(d)*0.05, posicionActual(d):parcelasAdyacentesConMaleza(s,posicionActual(d)))]}
+\aux{infoProductos}{s: Sistema, d: Drone}{[(Producto, Carga, [(\ent, \ent)])]}{[\\(Plaguicida, bateria(d) div 10, [posicionActual(d)]), \\
+(PlaguicidaBajoConsumo, bateria(d) div 20, [posicionActual(d)]), \\
+(Herbicida, bateria(d) div 20, [posicionActual(d)]), \\
+(HerbicidaLargoAlcance, bateria(d) div 20, posicionActual(d):parcelasAdyacentesConMaleza(s,posicionActual(d)))]}
 
 \aux{esPosicionActualNoSensada}{s: Sistema, d: Drone}{Bool}{estadoDelCultivo(s, prm(posicionActual(d)), \\ sgd(posicionActual(d))) == NoSensado}
 
