@@ -38,7 +38,7 @@ estadoDelCultivo(pre(s), prm(p), sgd(p)) \notin [EnCrecimiento, RecienSembrado] 
 
 \asegura[siNoVuelanNoSeModifican]{(\forall d \selec enjambreDrones(pre(s))) \\ \neg enVuelo(d) \Rightarrow droneEnLista(enjambreDrones(s), d)}
 
-\asegura[siVuelanFertilizan]{(\forall d \selec enjambreDrones(pre(s))) \\ enVuelo(d) \Rightarrow droneEnLista(enjambreDrones(s), droneDespuesDeFertilizar(d))}
+\asegura[siVuelanFertilizan]{(\forall d \selec enjambreDrones(pre(s))) \\ enVuelo(d) \Rightarrow droneEnLista(enjambreDrones(s), dronePorId(s, d))}
 
 \end{problema}
 
@@ -51,8 +51,6 @@ estadoDelCultivo(pre(s), prm(p), sgd(p)) \notin [EnCrecimiento, RecienSembrado] 
 \aux{fertilizaHastaColumna}{s: Sistema, d: Drone}{\ent}{max0([primerObstaculoEnColumna(campo(s), d)+1, \\ prm(posicionActual(d))-bateria(d), prm(posicionActual(d))-fertilizanteDisponible(d)])}
 
 \aux{primerObstaculoEnColumna}{c: Campo, d: Drone}{\ent}{max0([i | i \selec [0..prm(posicionActual(d))], \\ contenido(c, i, sgd(posicionActual(d))) \neq Cultivo])}
-
-\aux{droneDespuesDeFertilizar}{s: Sistema, d: Drone}{d: Drone}{TO-DO}
 
 %\section{Funciones Auxiliares}
 
