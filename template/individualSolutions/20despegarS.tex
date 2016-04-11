@@ -23,11 +23,9 @@
 \input{tipos/sistema}
 
 \begin{problema}{despegarS}{s: Sistema, d: Drone}{}
-%Asumimos que modifica el drone d y es un error de tipeo%
 \requiere{(\exists d' \selec enjambreDrones(s)) mismoDrone(d, d')}
 \requiere{\neg enVuelo(d)}
 \requiere{bateria(d) > 0}
-%Aclarar que está en el granero por invariante de s%
 \modifica{d}
 \asegura{id(d) == id(pre(d))}
 \asegura{bateria(d) == bateria(pre(d))-1}
@@ -35,8 +33,6 @@
 \asegura{enVuelo(d)}
 \asegura{(mismos(productosDisponibles(d),  productosDisponibles(pre(d))))}
 \end{problema}
-
-\noindent \aux{mismoDrone}{d1: Drone, d2: Drone}{Bool}{(id(d1) == id(d2)) \land (bateria(d1) == bateria(d2)) \land (enVuelo(d1) == enVuelo(d2)) \land (vueloRealizado(d1) == vueloRealizado(d2)) \land (posicionActual(d1) == posicionActual(d2)) \land (mismos(productosDisponibles(d1),  productosDisponibles(d2)))}
 
 %\section{Funciones Auxiliares}
 
