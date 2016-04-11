@@ -36,21 +36,26 @@ estadoDelCultivo(pre(s), prm(p), sgd(p)) \notin [EnCrecimiento, RecienSembrado] 
 
 \asegura[mismaCantidadDeDrones]{|enjambreDrones(s)| == |enjambreDrones(pre(s))|}
 
-\asegura[siNoVuelanNoSeModifican]{(\forall d \selec enjambreDrones(pre(s))) \\ \neg enVuelo(d) \Rightarrow droneEnLista(enjambreDrones(s), d)}
+\asegura[siNoVuelanNoSeModifican]{(\forall d \selec enjambreDrones(pre(s)), \neg enVuelo(d)) \\ droneEnLista(enjambreDrones(s), d)}
 
-\asegura[siVuelanFertilizan]{(\forall d \selec enjambreDrones(pre(s))) \\ enVuelo(d) \Rightarrow droneEnLista(enjambreDrones(s), dronePorId(s, d))}
+\asegura[siVuelanFertilizan]{(\forall d \selec enjambreDrones(pre(s)), enVuelo(d)) (\exists {d'} \selec {enjambreDrones(s)}) \\ 
+id(d') == id(d) \land bateria(d') == bateria(d)-|parcelasAFertilizarPorDrone(s, d)|
+\land \neg enVuelo(d') 
+\\
+\land mismos(productosDisponibles(d'), eliminarFertilizante(d, |parcelasAFertilizarPorDrone(s, d)|))
+}
 
 \end{problema}
 
-%revisar si se incluye la parcela actual%
-
 \aux{parcelasAFertilizar}{s: Sistema}{[(\ent, \ent)]}{[p | d \selec enjambreDrones(s), \\ p \selec parcelasAFertilizarPorDrone(s, d), enVuelo(d)]}
 
-\aux{parcelasAFertilizarPorDrone}{s: Sistema, d: Drone}{[(\ent, \ent)]}{[(i, sgd(posicionActual(d))) | \\ i \selec [fertilizaHastaColumna(s, d)..prm(posicionActual(d))]]}
+\aux{parcelasAFertilizarPorDrone}{s: Sistema, d: Drone}{[(\ent, \ent)]}{[(i, sgd(posicionActual(d))) | \\ i \selec [fertilizaHastaColumna(s, d)..prm(posicionActual(d)))]}
 
 \aux{fertilizaHastaColumna}{s: Sistema, d: Drone}{\ent}{max0([primerObstaculoEnColumna(campo(s), d)+1, \\ prm(posicionActual(d))-bateria(d), prm(posicionActual(d))-fertilizanteDisponible(d)])}
 
-\aux{primerObstaculoEnColumna}{c: Campo, d: Drone}{\ent}{max0([i | i \selec [0..prm(posicionActual(d))], \\ contenido(c, i, sgd(posicionActual(d))) \neq Cultivo])}
+\aux{primerObstaculoEnColumna}{c: Campo, d: Drone}{\ent}{max0([i | i \selec [0..prm(posicionActual(d))), \\ contenido(c, i, sgd(posicionActual(d))) \neq Cultivo])}
+
+\aux{eliminarFertilizante}{d: Drone, cant: \ent}{[Producto]}{[p | p \selec ps, p \neq Fertilizante]\\++[Fertilizante | i \selec [0..|fertilizanteDisponible(d)|-cant)]}
 
 %\section{Funciones Auxiliares}
 
