@@ -38,7 +38,7 @@ estadoDelCultivo(pre(s), prm(p), sgd(p)) \notin [EnCrecimiento, RecienSembrado] 
 
 \asegura[siNoVuelanNoSeModifican]{(\forall d \selec enjambreDrones(pre(s)), \neg enVuelo(d)) \\ droneEnLista(enjambreDrones(s), d)}
 
-\asegura[siVuelanFertilizan]{(\forall d \selec enjambreDrones(pre(s)), enVuelo(d)) (\exists {d'} \selec {enjambreDrones(s)}) \\ 
+\asegura[siVuelanFertilizan]{(\forall d \selec dronesEnVuelo(pre(s))) (\exists {d'} \selec {enjambreDrones(s)}) \\ 
 id(d') == id(d) \land bateria(d') == bateria(d)-|parcelasAFertilizarPorDrone(s, d)|
 \land \neg enVuelo(d') 
 \\
