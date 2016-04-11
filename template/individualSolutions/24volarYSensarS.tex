@@ -50,13 +50,13 @@ estadoDelCultivo(s, prm(p), sgd(p)) == RecienSembrado}
 
 \end{problema}
 
-\aux{bateriaConsumida}{s: Sistema, d1: Drone,  d2: Drone}{\ent}{max(0:[sgd(i) | i \selec \\ impactoProductos(s, d1, productosAplicados(d1, d2))])}
+\aux{bateriaConsumida}{s: Sistema, d1: Drone,  d2: Drone}{\ent}{max(0:[sgd3(i) | i \selec \\ impactoProductos(s, d1, productosAplicados(d1, d2))])}
 
-\aux{parcelasAfectadas}{s: Sistema, d1: Drone,  d2: Drone}{[\ent]}{[pos | i \selec \\ impactoProductos(s, d2, productosAplicados(d1, d2)), pos \selec trc(i)]}
+\aux{parcelasAfectadas}{s: Sistema, d1: Drone,  d2: Drone}{[\ent]}{[pos | i \selec \\ impactoProductos(s, d2, productosAplicados(d1, d2)), pos \selec trc3(i)]}
 
 \aux{productosAplicados}{d1: Drone, d2: Drone}{[Producto]}{[p | p \selec productosDisponibles(d1), \\ p \notin productosDisponibles(d2)]}
 
-\aux{impactoProductos}{s: Sistema, d: Drone, ps: [Producto]}{[(Producto, Carga, [(\ent, \ent)])]}{[i | i \selec infoProductos(s, d), \\ prm(i) \in ps]}
+\aux{impactoProductos}{s: Sistema, d: Drone, ps: [Producto]}{[(Producto, Carga, [(\ent, \ent)])]}{[i | i \selec infoProductos(s, d), \\ prm3(i) \in ps]}
 
 \aux{infoProductos}{s: Sistema, d: Drone}{[(Producto, Carga, [(\ent, \ent)])]}{[\\(Plaguicida, bateria(d) div 10, [posicionActual(d)]), \\
 (PlaguicidaBajoConsumo, bateria(d) div 20, [posicionActual(d)]), \\
