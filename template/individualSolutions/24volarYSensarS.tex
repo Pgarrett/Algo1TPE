@@ -22,9 +22,15 @@
 
 \input{tipos/sistema}
 
+\newpage
+
 \begin{problema}{volarYSensarS}{s: Sistema, d: Drone}{}
+
 \requiere[droneEnSistema]{droneEnLista(enjambreDrones(s), d)}
+
 \requiere[algoDeBateria]{bateria(d) > 0}
+
+\requiere[parcelaLibre]{\neg ((\forall p \selec parcelasAdyacentes(campo(s), posicionActual(d))) \\ (\exists d' \selec enjambreDrones(s)) posicionActual(d') == p)}
 \modifica{s}
 
 \asegura[mismoCampo]{campo(s) == campo(pre(s))}
@@ -33,20 +39,22 @@
 
 \asegura[mismosDronesSinD]{(\forall d' \selec enjambreDrones(pre(s)), d \neq d') droneEnLista(enjambreDrones(s), d')}
 
-\asegura[nuevoD]{(\exists d' \selec enjambreDrones(s)) id(d') == id(d) \\ \land bateria(d') == bateria(d)-1-bateriaConsumida(pre(s), d, d')) \\ \land enVuelo(d')
+\asegura[nuevoD]{(\exists d' \selec enjambreDrones(s)) id(d') == id(d) \\ \land bateria(d') == bateria(d)-1-bateriaConsumida(pre(s), d, d') \\ \land enVuelo(d')
 \land |vueloRealizado(d')| == |vueloRealizado(d)|+1
 \\ \land
 |productosAplicados(d, d')| <= 1
 \\ \land
 mismos(productosAplicados(d, d')++productosDisponibles(d'), productosDisponibles(d))}
 
-\asegura[noDMismoEstadoDelCultivo]{(\forall p \selec parcelasConCultivo(campo(pre(s))), \\ p \notin parcelasAfectadas(pre(s), d, dronePorId(s, d))) 
-\\ esPosicionActualNoSensada(s, dronePorId(s, d)) \Rightarrow (estadoDelCultivo(s, prm(p), sgd(p)) \neq NoSensado) 
-\\ \land \neg esPosicionActualNoSensada(s, dronePorId(s, d)) \Rightarrow \\ (estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p)))}
+\asegura[noDMismoEstadoDelCultivo]{d' = dronePorId(s, d) \land \\ (\forall p \selec parcelasConCultivo(campo(pre(s))), p \notin parcelasAfectadas(pre(s), d, d')) 
+\\ esPosicionActualNoSensada(s, d') \Rightarrow (estadoDelCultivo(s, prm(p), sgd(p)) \neq NoSensado) 
+\\ \land \neg esPosicionActualNoSensada(s, d') \Rightarrow \\ (estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p)))}
 %Tener en cuenta los productos de largo alcance%
 
 \asegura[dNuevoEstadoDelCultivo]{(\forall p \selec parcelasAfectadas(pre(s), d, dronePorId(s, d))) \\
 estadoDelCultivo(s, prm(p), sgd(p)) == RecienSembrado}
+
+\asegura[productosBienUsados]{d' = dronePorId(s,d) \land pos=posicionActual(d') \land \\ (\forall p \selec productosApicados(d, d')) contenido(campo(s), prm(pos), sgd(pos)) == Cultivo \\ \land ((estadoDelCultivo(pre(s), prm(pos), sgd(pos)) == ConMaleza \land p \in [Herbicida, HerbicidaLargoAlcance]) \\ \lor (estadoDelCultivo(pre(s), prm(pos), sgd(pos)) == ConPlaga \land p \in [Plaguicida, PlaguicidaBajoConsumo]))}
 
 \end{problema}
 
@@ -58,10 +66,10 @@ estadoDelCultivo(s, prm(p), sgd(p)) == RecienSembrado}
 
 \aux{impactoProductos}{s: Sistema, d: Drone, ps: [Producto]}{[(Producto, Carga, [(\ent, \ent)])]}{[i | i \selec infoProductos(s, d), \\ prm3(i) \in ps]}
 
-\aux{infoProductos}{s: Sistema, d: Drone}{[(Producto, Carga, [(\ent, \ent)])]}{[\\(Plaguicida, bateria(d) div 10, [posicionActual(d)]), \\
-(PlaguicidaBajoConsumo, bateria(d) div 20, [posicionActual(d)]), \\
-(Herbicida, bateria(d) div 20, [posicionActual(d)]), \\
-(HerbicidaLargoAlcance, bateria(d) div 20, posicionActual(d):parcelasAdyacentesConMaleza(s,posicionActual(d)))]}
+\aux{infoProductos}{s: Sistema, d: Drone}{[(Producto, Carga, [(\ent, \ent)])]}{[\\(Plaguicida, bateria(d)-10, [posicionActual(d)]), \\
+(PlaguicidaBajoConsumo, bateria(d)-5, [posicionActual(d)]), \\
+(Herbicida, bateria(d)-5, [posicionActual(d)]), \\
+(HerbicidaLargoAlcance, bateria(d)-5, posicionActual(d):parcelasAdyacentesConMaleza(s,posicionActual(d)))]}
 
 \aux{esPosicionActualNoSensada}{s: Sistema, d: Drone}{Bool}{estadoDelCultivo(s, prm(posicionActual(d)), \\ sgd(posicionActual(d))) == NoSensado}
 
