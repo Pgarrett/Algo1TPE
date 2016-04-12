@@ -26,7 +26,10 @@
 \requiere[droneEnSistema]{droneEnLista(enjambreDrones(s), d)}
 \requiere[droneNoEnVuelo]{\neg enVuelo(d)}
 \requiere[algoDeBateria]{bateria(d) > 0}
+\requiere[parcelaLibre]{\neg ((\forall p \selec parcelasAdyacentesAlGranero(campo(s))) \\ (\exists d' \selec enjambreDrones(s)) posicionActual(d') == p)}
+
 \modifica{s}
+
 \asegura[mismoCampo]{campo(s) == campo(pre(s))}
 
 \asegura[mismoEstado]{(\forall {p} \selec {parcelasConCultivo(campo(s))}) \\ estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p))}
