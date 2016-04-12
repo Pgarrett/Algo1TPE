@@ -35,8 +35,8 @@
 
 \asegura[noDmismosDrones]{(\forall d' \selec enjambreDrones(s), id(d') \neq id(d)) (\exists d'' \selec enjambreDrones(pre(s))) \\ mismoDrone(d', d'')}
 
-\asegura[nuevoDrone]{(\exists d' \selec enjambreDrones(s)) id(d') == id(d) \\
-\land bateria(d') == bateria(d)-1 \land |vueloRealizado(d')| == 2 \land enVuelo(d') \\ \land mismos(productosDisponibles(d'),  productosDisponibles(d))}
+\asegura[nuevoDrone]{(\exists d' \selec enjambreDrones(s)) id(d') == id(d)
+\land bateria(d') == bateria(d)-1 \land enVuelo(d') \\ \land |vueloRealizado(d')| == 2 \land vueloRealizado(d')_0 == posicionGranero(campo(s)) \\ \land  mismos(productosDisponibles(d'),  productosDisponibles(d))}
 \end{problema}
 
 %\section{Funciones Auxiliares}
