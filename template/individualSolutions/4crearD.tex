@@ -22,10 +22,10 @@
 
 \input{tipos/drone}
 
-\begin{problema}{crearD}{id: \ent, pd:[Producto]}{Drone}
-\asegura{\neg enVuelo(\res)}
-\asegura{bateria(d) == 100}
+\begin{problema}{crearD}{id: Id, pd:[Producto]}{Drone}
 \asegura{id(\res) == id}
+\asegura{bateria(\res) == 100}
+\asegura{\neg enVuelo(\res)}
 \asegura{mismos(productosDisponibles(\res), pd)}
 \end{problema}
 
