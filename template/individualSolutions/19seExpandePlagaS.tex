@@ -24,18 +24,12 @@
 
 \begin{problema}{seExpandePlagaS}{s: Sistema}{}
 \modifica{s}
-\asegura{campo(pre(s)) == campo(s)}
-\asegura{mismosDrones(enjambreDrones(pre(s)), enjambreDrones(s))}
-\asegura{(\forall {p} \selec {parcelasConCultivo(s)}) (seContagiaPlaga(pre(s), p) \Rightarrow estadoDelCultivo(s, prm(p), sgd(p)) == ConPlaga) \land (\neg seContagiaPlaga(pre(s), p) \Rightarrow estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p)))}
+\asegura[mismoCampo]{campo(s) == campo(pre(s))}
+\asegura[mismosDrones]{mismosDrones(enjambreDrones(s), enjambreDrones(pre(s)))}
+\asegura[estadoDelCultivo]{(\forall {p} \selec {parcelasConCultivo(campo(s))}) \\ (seContagiaPlaga(pre(s), p) \land estadoDelCultivo(s, prm(p), sgd(p)) == ConPlaga) \\ \lor (\neg seContagiaPlaga(pre(s), p) \land estadoDelCultivo(s, prm(p), sgd(p)) == estadoDelCultivo(pre(s), prm(p), sgd(p)))}
 \end{problema}
 
-\noindent \aux{seContagiaPlaga}{s: Sistema, p: (\ent, \ent)}{Bool}{(\exists p' \selec p:parcelasAdyacentesConCultivo(s, p)) estadoDelCultivo(s, prm(p'), sgd(p')) == ConPlaga}
-
-\noindent \aux{parcelasAdyacentesConCultivo}{s: Sistema, p: (\ent, \ent)}{[(\ent, \ent)]}{[p' | p' \selec parcelasConCultivo(campo(s)), distancia(p, p') == 1]}
-
-\noindent \aux{parcelasConCultivo}{s: Sistema}{[(\ent, \ent)]}{[(i,j) | i \selec [0..prm(dimensiones(campo(s)))), j \selec [0..sgd(dimensiones(campo(s)))), contenido(campo(s), prm(p'), sgd(p')) == Cultivo]}
-
-\noindent \aux{mismosDrones}{ds1: [Drone], ds2: [Drone]}{Bool}{(|ds1| == |ds2|) \land (sinRepetidos(d1)) \land (sinRepetidos(d2)) \land ((\forall d1 \selec ds1) \exists d2 \in ds2 | (id(d1) == id(d2)) \land (bateria(d1) == bateria(d2)) \land (enVuelo(d1) == enVuelo(d2)) \land (vueloRealizado(d1) == vueloRealizado(d2)) \land (posicionActual(d1) == posicionActual(d2)) \land (mismos(productosDisponibles(d1),  productosDisponibles(d2))))}
+\aux{seContagiaPlaga}{s: Sistema, p: (\ent, \ent)}{Bool}{(\exists p' \selec p:parcelasAdyacentesConCultivo(campo(s), p)) \\ estadoDelCultivo(s, prm(p'), sgd(p')) == ConPlaga}
 
 %\section{Funciones Auxiliares}
 
