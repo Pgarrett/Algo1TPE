@@ -23,12 +23,12 @@
 \input{tipos/campo}
 
 \begin{problema}{crearC}{posG, posC: (\ent, \ent)}{Campo}
-\requiere{ posPositiva(posG) \land posPositiva(posC) }
+\requiere{ posPositiva0(posG) \land posPositiva0(posC) }
 \requiere{ posG \neq posC}
 \requiere{ distancia((0,0), posG) \leq 100 \land distancia(posG, posC) \leq 100}
 
-\asegura{ contenido(res, \prm{posG}, \sgd{posG}) == Granero}
-\asegura{ contenido(res, \prm{posC}, \sgd{posC}) == Casa} 
+\asegura{posicionGranero(res) = posG}
+\asegura{posicionCasa(res) = posC} 
 \end{problema}
 
 \noindent \aux{posPositiva}{pos: (\ent, \ent)}{\bool}{\prm{pos} \geq 0 \land \sgd{pos} \geq 0}
