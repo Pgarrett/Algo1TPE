@@ -25,9 +25,17 @@
 \begin{problema}{vuelosCruzadosD}{ds: [Drone]}{[((\ent,\ent),\ent)]}
 
 \requiere[todosEnVuelo]{(\forall \selector {d}{ds}) enVuelo(d)}
+
 \requiere[igualDeLargos]{(\forall \selector {d1}{ds}, \selector {d2}{ds}) |vueloReaizado(d1)| == |vueloRealizado(d2)|}
+
 \asegura[hayCruce]{(\forall \selector {j}{[0..|res|)}) sgd(res_j) > 1}
+
+\asegura[estanTodosLosCruces]{(\forall \selector {p}{posicionesRecorridas(ds)}, colisionesEnPosicion(ds, p) > 1) \\ (\exists r \selec res) prm(r) = p}
+
 \asegura[cantidadDeCruces]{(\forall \selector {j}{[0..|res|)}) sgd(res_j) == colisionesEnPosicion(ds, prm(res_j))}
+
+\asegura[crucesSinRepetidos]{sinRepetidos([prm(c) | c \selec res])}
+
 \asegura[orden]{ordenadoAsc(res) \lor ordenadoDesc(res)}
 
 \end{problema}
